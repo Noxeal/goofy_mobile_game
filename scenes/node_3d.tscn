@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://of8lna3ydxcy"]
+[gd_scene load_steps=14 format=3 uid="uid://of8lna3ydxcy"]
 
 [ext_resource type="Script" uid="uid://3x4tpnil8hu0" path="res://scripts/main.gd" id="1_xvgsr"]
 [ext_resource type="Script" uid="uid://26yxdbr3jchh" path="res://scripts/character_body_3d.gd" id="2_oqwcg"]
@@ -29,6 +29,10 @@ height = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xvgsr"]
 size = Vector3(1, 1.047, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xvgsr"]
+font_size = 70
+font_color = Color(1, 0, 0, 1)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_xvgsr")
@@ -61,7 +65,7 @@ visible = false
 mesh = SubResource("CapsuleMesh_i5arm")
 
 [node name="Camera3D" type="Camera3D" parent="MainCharacter"]
-transform = Transform3D(1, 0, 0, 0, 0.943547, 0.331239, 0, -0.331239, 0.943547, 0.0174084, 6.91623, 9.56757)
+transform = Transform3D(1, 0, 0, 0, 0.943547, 0.331239, 0, -0.331239, 0.943547, 0.0174084, 6.91623, 13.9726)
 
 [node name="AllPortes" type="Node3D" parent="."]
 
@@ -115,3 +119,33 @@ text = "Amount : "
 
 [node name="Basic Obstacle2" parent="." instance=ExtResource("5_oqwcg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.50935, 0.912673, -48.3255)
+
+[node name="Death_menu" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Death_Label" type="Label" parent="Death_menu"]
+offset_left = 262.0
+offset_top = 177.0
+offset_right = 850.0
+offset_bottom = 273.0
+text = "Loser c cho 😶‍🌫️😶‍🌫️"
+label_settings = SubResource("LabelSettings_xvgsr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Death_menu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.5
+offset_top = -15.5
+offset_right = 65.5
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+action_mode = 0
+text = "RECOMMENCER"
+
+[connection signal="button_down" from="Death_menu/Button" to="." method="_on_button_button_down"]

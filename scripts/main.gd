@@ -4,6 +4,8 @@ extends Node3D
 @onready var other_player = preload("res://scenes/other_character.tscn")
 @onready var main_player = get_node("MainCharacter")
 @onready var label_amount = $Label_Amount
+@onready var death_menu = $Death_menu
+@onready var restart_position = main_player.position
  
 var player_clones: Array = []
 
@@ -12,6 +14,18 @@ func _ready() -> void:
 	connect_all_obstacles(self)
 	
 	add_new_player(Vector3(main_player.position.x, main_player.position.y, main_player.position.z+1))
+	
+
+func _on_button_button_down() -> void:
+	main_player.position = restart_position
+	connect_all_portes(self)
+	connect_all_obstacles(self)
+	
+	add_new_player(Vector3(main_player.position.x, main_player.position.y, main_player.position.z+1))
+	
+	death_menu.visible = false
+	
+
 
 func connect_all_portes(node):
 	for child in node.get_children():
@@ -35,6 +49,9 @@ func _on_obstacle_hit(child):
 		child.queue_free()
 		player_amount -= 1
 		label_amount.text = "Amount :" + str(player_amount)
+		
+		if(player_amount == 0):
+			death_menu.visible = true
 
 func add_new_player(pos: Vector3):
 	var new_player = other_player.instantiate()
@@ -76,3 +93,4 @@ func _on_porte_entered(operator: String, multiplier: int) -> void:
 	
 	print("Nombre de bonhommes : ", player_amount)
 	label_amount.text = "Amount :" + str(player_amount)
+	
