@@ -1,0 +1,91 @@
+[gd_scene load_steps=12 format=3 uid="uid://of8lna3ydxcy"]
+
+[ext_resource type="Script" uid="uid://3x4tpnil8hu0" path="res://scripts/main.gd" id="1_xvgsr"]
+[ext_resource type="Script" uid="uid://26yxdbr3jchh" path="res://scripts/character_body_3d.gd" id="2_oqwcg"]
+[ext_resource type="PackedScene" uid="uid://vjdyvj2c5nh2" path="res://scenes/other_character.tscn" id="3_a6664"]
+[ext_resource type="PackedScene" uid="uid://bu73k361rn5bx" path="res://scenes/porte.tscn" id="4_10v3s"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4xowi"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_a202f"]
+sky_material = SubResource("ProceduralSkyMaterial_4xowi")
+
+[sub_resource type="Environment" id="Environment_noarx"]
+background_mode = 2
+sky = SubResource("Sky_a202f")
+tonemap_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_a0tk4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r3fl7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jka67"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_i5arm"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_xvgsr")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_noarx")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Platform" type="StaticBody3D" parent="."]
+transform = Transform3D(18.983, 0, 0, 0, 1, 0, 0, 0, -254.745, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform"]
+mesh = SubResource("BoxMesh_a0tk4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform"]
+shape = SubResource("BoxShape3D_r3fl7")
+
+[node name="MainCharacter" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.03676, 46.9693)
+script = ExtResource("2_oqwcg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MainCharacter"]
+shape = SubResource("CapsuleShape3D_jka67")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MainCharacter"]
+visible = false
+mesh = SubResource("CapsuleMesh_i5arm")
+
+[node name="Camera3D" type="Camera3D" parent="MainCharacter"]
+transform = Transform3D(1, 0, 0, 0, 0.943547, 0.331239, 0, -0.331239, 0.943547, 0.0174084, 6.91623, 9.56757)
+
+[node name="OtherCharacter" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_a6664")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.75135, 48.4053)
+target = NodePath("../MainCharacter")
+
+[node name="AllPortes" type="Node3D" parent="."]
+
+[node name="Portes" type="Node3D" parent="AllPortes"]
+transform = Transform3D(0.898136, 0, 0, 0, 1, 0, 0, 0, 1, -0.94272, 3.27609, 39.1025)
+
+[node name="Porte" parent="AllPortes/Portes" instance=ExtResource("4_10v3s")]
+
+[node name="Porte2" parent="AllPortes/Portes" instance=ExtResource("4_10v3s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3196, 0, 0)
+
+[node name="Portes2" type="Node3D" parent="AllPortes"]
+transform = Transform3D(0.898136, 0, 0, 0, 1, 0, 0, 0, 1, -0.94272, 3.27609, 18.021)
+
+[node name="Porte" parent="AllPortes/Portes2" instance=ExtResource("4_10v3s")]
+
+[node name="Porte2" parent="AllPortes/Portes2" instance=ExtResource("4_10v3s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3196, 0, 0)
+
+[node name="Portes3" type="Node3D" parent="AllPortes"]
+transform = Transform3D(0.898136, 0, 0, 0, 1, 0, 0, 0, 1, -0.94272, 3.27609, -5.19313)
+
+[node name="Porte" parent="AllPortes/Portes3" instance=ExtResource("4_10v3s")]
+
+[node name="Porte2" parent="AllPortes/Portes3" instance=ExtResource("4_10v3s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3196, 0, 0)

@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://vjdyvj2c5nh2"]
+
+[ext_resource type="Script" uid="uid://4qthsvk7l0op" path="res://scripts/other_character.gd" id="1_1ii6y"]
+[ext_resource type="PackedScene" uid="uid://4ovhikixdu8r" path="res://assets/capoeira.tscn" id="2_5j07w"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jka67"]
+
+[node name="OtherCharacter" type="CharacterBody3D"]
+script = ExtResource("1_1ii6y")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_jka67")
+
+[node name="Capoeira" parent="." instance=ExtResource("2_5j07w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.904046, 0)

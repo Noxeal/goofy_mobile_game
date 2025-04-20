@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://bu73k361rn5bx"]
+
+[ext_resource type="Script" uid="uid://liafv0bfgmfn" path="res://scripts/porte.gd" id="1_cbvu1"]
+[ext_resource type="AudioStream" uid="uid://bfcgwa0o6pdun" path="res://assets/tung-tung-sahur.mp3" id="2_m0o0n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a202f"]
+size = Vector3(9.511, 6.457, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a202f"]
+size = Vector3(9.511, 6.457, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noarx"]
+transparency = 1
+albedo_color = Color(0.104462, 0.512924, 0.879821, 0.345098)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_h0nra"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Porte" type="Area3D"]
+script = ExtResource("1_cbvu1")
+
+[node name="HitBox" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.24076, 0, 0)
+shape = SubResource("BoxShape3D_a202f")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.24996, 0, 0)
+mesh = SubResource("BoxMesh_a202f")
+surface_material_override/0 = SubResource("StandardMaterial3D_noarx")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(513, 512)
+
+[node name="Label" type="Label" parent="SubViewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3000.0
+offset_top = -3000.0
+offset_right = 3000.0
+offset_bottom = 3000.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "x7
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 3.6, -4.26408, -0.770811, 0.327095)
+modulate = Color(0.906178, 0.968162, 1, 1)
+texture = SubResource("ViewportTexture_h0nra")
+
+[node name="AudioSuper" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_m0o0n")
+volume_db = -16.865
+pitch_scale = 2.49
+
+[node name="AudioPasSuper" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_m0o0n")
+volume_db = -16.92
+pitch_scale = 0.54
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
