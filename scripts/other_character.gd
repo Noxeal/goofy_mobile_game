@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @export var target: Node3D
 @export var follow_distance: float = 2
-@export var speed: float = 20
+@export var speed: float = 50
 @export var gravity: float = 500
 
 func _physics_process(delta):
