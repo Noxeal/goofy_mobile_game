@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://of8lna3ydxcy"]
+[gd_scene load_steps=17 format=3 uid="uid://of8lna3ydxcy"]
 
 [ext_resource type="Script" uid="uid://3x4tpnil8hu0" path="res://scripts/main.gd" id="1_xvgsr"]
 [ext_resource type="Script" uid="uid://26yxdbr3jchh" path="res://scripts/character_body_3d.gd" id="2_oqwcg"]
 [ext_resource type="PackedScene" uid="uid://vjdyvj2c5nh2" path="res://scenes/other_character.tscn" id="3_a6664"]
 [ext_resource type="PackedScene" uid="uid://bu73k361rn5bx" path="res://scenes/porte.tscn" id="4_10v3s"]
+[ext_resource type="Script" uid="uid://in7l7w15odl3" path="res://scenes/basic_obstacle.gd" id="5_oqwcg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4xowi"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -26,6 +27,19 @@ radius = 0.1
 height = 0.2
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_i5arm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xvgsr"]
+size = Vector3(1, 1.047, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xvgsr"]
+albedo_color = Color(0.658824, 0.235294, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oqwcg"]
+material = SubResource("StandardMaterial3D_xvgsr")
+size = Vector3(10, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a6664"]
+size = Vector3(10, 1, 1)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_xvgsr")
@@ -89,3 +103,37 @@ transform = Transform3D(0.898136, 0, 0, 0, 1, 0, 0, 0, 1, -0.94272, 3.27609, -5.
 
 [node name="Porte2" parent="AllPortes/Portes3" instance=ExtResource("4_10v3s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3196, 0, 0)
+
+[node name="LeftWall" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.95238, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftWall"]
+transform = Transform3D(1, 0, 0, 0, -30.7354, 0, 0, 0, 253.364, 0, 14.5404, 0)
+shape = SubResource("BoxShape3D_xvgsr")
+debug_color = Color(0.439216, 0, 1, 1)
+
+[node name="RightWall" type="StaticBody3D" parent="."]
+transform = Transform3D(1.00069, 0, 0, 0, 1.00069, 0, 0, 0, 1.00069, 9.92992, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RightWall"]
+transform = Transform3D(1, 0, 0, 0, -30.7354, 0, 0, 0, 253.364, -0.0496273, 14.5404, 0.00176689)
+shape = SubResource("BoxShape3D_xvgsr")
+debug_color = Color(0.439216, 0, 1, 1)
+
+[node name="Basic Obstacle" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.49476, 1.00184, -30.0088)
+script = ExtResource("5_oqwcg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Basic Obstacle"]
+mesh = SubResource("BoxMesh_oqwcg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Basic Obstacle"]
+shape = SubResource("BoxShape3D_a6664")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Amount : "
+
+[connection signal="body_entered" from="Basic Obstacle" to="Basic Obstacle" method="_on_body_entered"]
+[connection signal="player_hit" from="Basic Obstacle" to="." method="_on_basic_obstacle_player_hit"]

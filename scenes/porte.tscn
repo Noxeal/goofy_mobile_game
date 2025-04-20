@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bu73k361rn5bx"]
+[gd_scene load_steps=8 format=3 uid="uid://bu73k361rn5bx"]
 
 [ext_resource type="Script" uid="uid://liafv0bfgmfn" path="res://scripts/porte.gd" id="1_cbvu1"]
+[ext_resource type="AudioStream" uid="uid://dr8n30dsytaei" path="res://assets/answer-correct.mp3" id="2_a2tin"]
 [ext_resource type="AudioStream" uid="uid://bfcgwa0o6pdun" path="res://assets/tung-tung-sahur.mp3" id="2_m0o0n"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a202f"]
@@ -55,9 +56,8 @@ modulate = Color(0.906178, 0.968162, 1, 1)
 texture = SubResource("ViewportTexture_h0nra")
 
 [node name="AudioSuper" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_m0o0n")
-volume_db = -16.865
-pitch_scale = 2.49
+stream = ExtResource("2_a2tin")
+volume_db = -24.36
 
 [node name="AudioPasSuper" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_m0o0n")
