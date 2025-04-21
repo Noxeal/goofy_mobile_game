@@ -65,7 +65,7 @@ func add_new_player(pos: Vector3):
 	label_amount.text = "Amount :" + str(player_amount)
 	
 func _on_porte_entered(operator: String, multiplier: int) -> void:
-	print("Porte traversée avec :", operator, multiplier)
+	#print("Porte traversée avec :", operator, multiplier)
 	
 	if operator == "+":
 		for i in range(1, multiplier+1):			
@@ -94,3 +94,28 @@ func _on_porte_entered(operator: String, multiplier: int) -> void:
 	print("Nombre de bonhommes : ", player_amount)
 	label_amount.text = "Amount :" + str(player_amount)
 	
+func _on_end_area_body_entered(body: Node3D) -> void:
+	if body is CharacterBody3D:
+		print("C'est la fin")
+		var highest_position = Vector3(main_player.position.x, main_player.position.y, main_player.position.z)
+		for i in range(0,player_clones.size()):
+			#print(player_clones[i])
+			player_clones[i].target = null
+			var new_clone_pos = Vector3(main_player.position.x, main_player.position.y+i, main_player.position.z)
+			#print(new_clone_pos)
+			player_clones[i].position = new_clone_pos
+			highest_position = Vector3(main_player.position.x, main_player.position.y+i, main_player.position.z)
+			
+		main_player.velocity = Vector3(0, 0, 0)
+		main_player.game_running = false
+		var direction = highest_position - main_player.position
+		var distance = direction.length()
+		print("direction :", direction)
+		print("distance :", direction)
+		
+		direction = direction.normalized()	* main_player.speed	
+		#direction.z = direction.z + 1
+		print("direction normalized :", direction)
+		main_player.position = Vector3(main_player.position.x, main_player.position.y, main_player.position.z)
+		main_player.velocity = direction 
+		print("mainplayer velocity :", main_player.velocity)

@@ -12,7 +12,7 @@ signal player_entered(operator: String, multiplier: int)
 
 func _ready() -> void:
 	chosen_operator = possible_operators[randi_range(0, possible_operators.size() - 1)]
-	print(chosen_operator + str(multiplier))
+	#print(chosen_operator + str(multiplier))
 	label.text = chosen_operator + str(multiplier)
 	
 func _on_body_entered(body: Node3D) -> void:

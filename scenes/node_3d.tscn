@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://of8lna3ydxcy"]
+[gd_scene load_steps=18 format=3 uid="uid://of8lna3ydxcy"]
 
 [ext_resource type="Script" uid="uid://3x4tpnil8hu0" path="res://scripts/main.gd" id="1_xvgsr"]
 [ext_resource type="Script" uid="uid://26yxdbr3jchh" path="res://scripts/character_body_3d.gd" id="2_oqwcg"]
 [ext_resource type="PackedScene" uid="uid://bu73k361rn5bx" path="res://scenes/porte.tscn" id="4_10v3s"]
+[ext_resource type="Script" uid="uid://dx1swdbk64xon" path="res://scenes/end_area.gd" id="5_a6664"]
 [ext_resource type="PackedScene" uid="uid://frkkbkwjycux" path="res://basic_obstacle.tscn" id="5_oqwcg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4xowi"]
@@ -33,6 +34,16 @@ size = Vector3(1, 1.047, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_xvgsr"]
 font_size = 70
 font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oqwcg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oqwcg"]
+transparency = 1
+albedo_color = Color(0, 1, 0, 0.203922)
+
+[sub_resource type="BoxMesh" id="BoxMesh_a6664"]
+material = SubResource("StandardMaterial3D_oqwcg")
+size = Vector3(20, 1, 1)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_xvgsr")
@@ -148,4 +159,16 @@ grow_vertical = 2
 action_mode = 0
 text = "RECOMMENCER"
 
+[node name="End_Area" type="Area3D" parent="."]
+transform = Transform3D(2.34644, 0, 0, 0, -72.1508, 0, 0, 0, 1, -0.248522, 13.0474, -67.9371)
+script = ExtResource("5_a6664")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="End_Area"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+shape = SubResource("BoxShape3D_oqwcg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="End_Area"]
+mesh = SubResource("BoxMesh_a6664")
+
 [connection signal="button_down" from="Death_menu/Button" to="." method="_on_button_button_down"]
+[connection signal="body_entered" from="End_Area" to="." method="_on_end_area_body_entered"]
